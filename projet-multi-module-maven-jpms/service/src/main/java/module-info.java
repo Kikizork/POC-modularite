@@ -5,5 +5,5 @@ open module com.poc.service {
 	requires spring.context;
 	requires com.poc.dao;
 
-	exports com.poc.modularite.java.service.interfaces;
+	exports com.poc.modularite.java.service.interfaces to com.poc.endpoint;
 }

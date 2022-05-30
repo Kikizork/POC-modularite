@@ -12,5 +12,5 @@ open module com.poc.dao {
 	requires com.poc.common;
 	requires com.poc.data;
 
-	exports com.poc.modularite.java.dao.interfaces;
+	exports com.poc.modularite.java.dao.interfaces to com.poc.service;
 }
