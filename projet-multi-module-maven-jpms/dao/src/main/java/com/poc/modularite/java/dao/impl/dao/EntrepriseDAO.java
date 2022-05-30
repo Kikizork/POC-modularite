@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.poc.modularite.java.dao.impl.repo.EntrepriseRepo;
@@ -13,12 +14,13 @@ import com.poc.modularite.java.data.dto.EntrepriseDTO;
 @Repository
 public class EntrepriseDAO implements IEntrepriseDAO {
 
-	private final EntrepriseRepo entrepriseRepo;
+	@Autowired
+	private EntrepriseRepo entrepriseRepo;
 
-	public EntrepriseDAO(EntrepriseRepo entrepriseRepo) {
-		super();
-		this.entrepriseRepo = entrepriseRepo;
-	}
+	/**
+	 * public EntrepriseDAO(EntrepriseRepo entrepriseRepo) { super();
+	 * this.entrepriseRepo = entrepriseRepo; }
+	 */
 
 	@Override
 	public List<EntrepriseDTO> findAll() {

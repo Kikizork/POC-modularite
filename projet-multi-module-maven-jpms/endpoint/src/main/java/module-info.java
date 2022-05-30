@@ -12,5 +12,6 @@ open module com.poc.endpoint {
 	requires spring.core;
 	requires com.poc.data;
 	requires com.poc.service;
+	requires java.instrument;
 
 }

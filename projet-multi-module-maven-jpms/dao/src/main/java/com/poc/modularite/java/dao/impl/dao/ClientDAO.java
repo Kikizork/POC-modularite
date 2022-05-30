@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.poc.modularite.java.dao.impl.repo.ClientRepo;
@@ -13,12 +14,13 @@ import com.poc.modularite.java.data.dto.ClientDTO;
 @Repository
 public class ClientDAO implements IClientDAO {
 
-	private final ClientRepo clientRepo;
+	@Autowired
+	private ClientRepo clientRepo;
 
-	public ClientDAO(ClientRepo clientRepo) {
-		super();
-		this.clientRepo = clientRepo;
-	}
+	/**
+	 * public ClientDAO(ClientRepo clientRepo) { super(); this.clientRepo =
+	 * clientRepo; }
+	 */
 
 	@Override
 	public List<ClientDTO> findAll() {
