@@ -3,6 +3,7 @@ package com.poc.modularite.java.data.dto;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.poc.modularite.java.common.data.dto.IDTO;
 import com.poc.modularite.java.data.model.EntrepriseModel;
@@ -115,11 +116,13 @@ public class EntrepriseDTO implements IDTO<EntrepriseModel, EntrepriseDTO> {
 		final EntrepriseModel model = convertToModelWithoutChildTable();
 
 		if (this.employeeDTOs != null) {
-			model.setEmployeeModels(this.employeeDTOs.stream().map(d -> d.convertToModelWithChildTable()).toList());
+			model.setEmployeeModels(
+					this.employeeDTOs.stream().map(d -> d.convertToModelWithChildTable()).collect(Collectors.toList()));
 		}
 
 		if (this.clientDTOs != null) {
-			model.setClientModels(this.clientDTOs.stream().map(d -> d.convertToModelWithChildTable()).toList());
+			model.setClientModels(
+					this.clientDTOs.stream().map(d -> d.convertToModelWithChildTable()).collect(Collectors.toList()));
 		}
 
 		return model;
@@ -142,11 +145,11 @@ public class EntrepriseDTO implements IDTO<EntrepriseModel, EntrepriseDTO> {
 
 		if (model.getEmployeeModels() != null) {
 			this.employeeDTOs = model.getEmployeeModels().stream()
-					.map(m -> new EmployeeDTO().modelToDTOWithChildTable(m)).toList();
+					.map(m -> new EmployeeDTO().modelToDTOWithChildTable(m)).collect(Collectors.toList());
 		}
 		if (model.getClientModels() != null) {
 			this.clientDTOs = model.getClientModels().stream().map(m -> new ClientDTO().modelToDTOWithChildTable(m))
-					.toList();
+					.collect(Collectors.toList());
 		}
 		return this;
 	}

@@ -1,6 +1,7 @@
 package com.poc.modularite.java.dao.impl.dao;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.data.domain.Sort;
@@ -23,33 +24,36 @@ public class ClientDAO implements IClientDAO {
 	@Override
 	public List<ClientDTO> findAll() {
 
-		return this.clientRepo.findAll().stream().map(m -> new ClientDTO().modelToDTOWithChildTable(m)).toList();
-	}
-
-	@Override
-	public List<ClientDTO> findAll(Sort sort) {
-
-		return this.clientRepo.findAll(sort).stream().map(m -> new ClientDTO().modelToDTOWithChildTable(m)).toList();
+		return this.clientRepo.findAll().stream().map(m -> new ClientDTO().modelToDTOWithChildTable(m))
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<ClientDTO> findAllById(Iterable<Integer> ids) {
 
-		return this.clientRepo.findAllById(ids).stream().map(m -> new ClientDTO().modelToDTOWithChildTable(m)).toList();
+		return this.clientRepo.findAllById(ids).stream().map(m -> new ClientDTO().modelToDTOWithChildTable(m))
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<ClientDTO> saveAll(Iterable<ClientDTO> dtos) {
 
-		return this.clientRepo.saveAll(
-				StreamSupport.stream(dtos.spliterator(), false).map(d -> d.convertToModelWithChildTable()).toList())
-				.stream().map(m -> new ClientDTO().modelToDTOWithChildTable(m)).toList();
+		return this.clientRepo
+				.saveAll(StreamSupport.stream(dtos.spliterator(), false).map(d -> d.convertToModelWithChildTable())
+						.collect(Collectors.toList()))
+				.stream().map(m -> new ClientDTO().modelToDTOWithChildTable(m)).collect(Collectors.toList());
 	}
 
 	@Override
 	public ClientDTO save(ClientDTO dto) {
 
 		return new ClientDTO().modelToDTOWithChildTable((this.clientRepo.save(dto.convertToModelWithChildTable())));
+	}
+
+	@Override
+	public List<ClientDTO> findAll(Sort sort) {
+		return this.clientRepo.findAll(sort).stream().map(m -> new ClientDTO().modelToDTOWithChildTable(m))
+				.collect(Collectors.toList());
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.poc.modularite.java.dao.impl.dao;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.data.domain.Sort;
@@ -23,26 +24,21 @@ public class EntrepriseDAO implements IEntrepriseDAO {
 	@Override
 	public List<EntrepriseDTO> findAll() {
 		return this.entrepriseRepo.findAll().stream().map(m -> new EntrepriseDTO().modelToDTOWithChildTable(m))
-				.toList();
-	}
-
-	@Override
-	public List<EntrepriseDTO> findAll(Sort sort) {
-		return this.entrepriseRepo.findAll(sort).stream().map(m -> new EntrepriseDTO().modelToDTOWithChildTable(m))
-				.toList();
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<EntrepriseDTO> findAllById(Iterable<Integer> ids) {
 		return this.entrepriseRepo.findAllById(ids).stream().map(m -> new EntrepriseDTO().modelToDTOWithChildTable(m))
-				.toList();
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<EntrepriseDTO> saveAll(Iterable<EntrepriseDTO> dtos) {
-		return this.entrepriseRepo.saveAll(
-				StreamSupport.stream(dtos.spliterator(), false).map(d -> d.convertToModelWithChildTable()).toList())
-				.stream().map(m -> new EntrepriseDTO().modelToDTOWithChildTable(m)).toList();
+		return this.entrepriseRepo
+				.saveAll(StreamSupport.stream(dtos.spliterator(), false).map(d -> d.convertToModelWithChildTable())
+						.collect(Collectors.toList()))
+				.stream().map(m -> new EntrepriseDTO().modelToDTOWithChildTable(m)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -50,6 +46,12 @@ public class EntrepriseDAO implements IEntrepriseDAO {
 
 		return new EntrepriseDTO()
 				.modelToDTOWithChildTable(this.entrepriseRepo.save(dto.convertToModelWithChildTable()));
+	}
+
+	@Override
+	public List<EntrepriseDTO> findAll(Sort sort) {
+		return this.entrepriseRepo.findAll(sort).stream().map(m -> new EntrepriseDTO().modelToDTOWithChildTable(m))
+				.collect(Collectors.toList());
 	}
 
 }

@@ -14,7 +14,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class ProjetStandardApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProjetStandardApplication.class, args);
+		try {
+			SpringApplication.run(ProjetStandardApplication.class, args);
+		} catch (final Exception e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 }
